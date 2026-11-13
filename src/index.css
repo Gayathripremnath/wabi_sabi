@@ -24,14 +24,14 @@
 html {
   min-width: 320px;
   scroll-behavior: smooth;
-  scroll-padding-top: 94px;
+  scroll-padding-top: 104px;
 }
 
 body {
   min-width: 320px;
   margin: 0;
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
+  font-size: 14.84px;
   line-height: 1.5;
 }
 
@@ -63,6 +63,6 @@ img {
 
 @media (max-width: 760px) {
   html {
-    scroll-padding-top: 76px;
+    scroll-padding-top: 86px;
   }
 }

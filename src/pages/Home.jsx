@@ -1,12 +1,16 @@
+import { useEffect, useState } from 'react'
 import {
   ArrowDown,
   ArrowRight,
+  ArrowUp,
   ArrowUpRight,
   Check,
+  Pause,
+  Play,
   Quote,
   Sparkles,
 } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import './Home.css'
 
 const photos = {
@@ -26,6 +30,24 @@ const photos = {
   testimonial: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1500&q=88',
   cta: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2200&q=88',
 }
+
+const heroSlides = [
+  {
+    image: photos.hero,
+    alt: 'Warm modern living room with natural materials',
+    label: 'LIVING SPACES',
+  },
+  {
+    image: photos.projectBedroom,
+    alt: 'Quiet bedroom with soft neutral finishes',
+    label: 'RESTFUL DETAILS',
+  },
+  {
+    image: photos.values,
+    alt: 'Light-filled interior with natural textures',
+    label: 'NATURAL FINISHES',
+  },
+]
 
 const experienceCards = [
   {
@@ -108,7 +130,58 @@ function Reveal({ children, className = '', delay = 0 }) {
   )
 }
 
+function ScrollProgressButton() {
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const updateProgress = () => {
+      const scrollableHeight =
+        document.documentElement.scrollHeight - window.innerHeight
+      setProgress(
+        scrollableHeight > 0
+          ? Math.min(window.scrollY / scrollableHeight, 1)
+          : 0,
+      )
+    }
+
+    updateProgress()
+    window.addEventListener('scroll', updateProgress, { passive: true })
+    window.addEventListener('resize', updateProgress)
+
+    return () => {
+      window.removeEventListener('scroll', updateProgress)
+      window.removeEventListener('resize', updateProgress)
+    }
+  }, [])
+
+  return (
+    <button
+      className="scroll-progress-button"
+      type="button"
+      aria-label={`Scroll to top. Page progress ${Math.round(progress * 100)} percent`}
+      style={{ '--progress': `${progress * 360}deg` }}
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    >
+      <span><ArrowUp size={18} strokeWidth={1.6} /></span>
+    </button>
+  )
+}
+
 function Home() {
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0)
+  const [heroPaused, setHeroPaused] = useState(false)
+  const activeHero = heroSlides[activeHeroIndex]
+
+  useEffect(() => {
+    if (heroPaused) return undefined
+
+    const interval = setInterval(() => {
+      setActiveHeroIndex((current) => (current + 1) % heroSlides.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [heroPaused])
+
   return (
     <main>
       <section className="hero-section" id="home">
@@ -141,14 +214,50 @@ function Home() {
         </div>
         <motion.div
           className="hero-image-wrap"
-          initial={{ clipPath: 'inset(0 0 100% 0)' }}
-          animate={{ clipPath: 'inset(0 0 0% 0)' }}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1] }}
         >
-          <img className="cover-image" src={photos.hero} alt="Warm modern living room with natural materials" />
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.img
+              key={activeHero.image}
+              className="cover-image"
+              src={activeHero.image}
+              alt={activeHero.alt}
+              initial={{ opacity: 0, scale: 1.025 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.55 }}
+            />
+          </AnimatePresence>
+          <div className="hero-carousel-controls">
+            <div className="hero-thumbnails" role="group" aria-label="Choose a landing image">
+              {heroSlides.map((slide, index) => (
+                <button
+                  className="hero-thumbnail"
+                  type="button"
+                  key={slide.image}
+                  aria-label={`Show ${slide.label.toLowerCase()}`}
+                  aria-pressed={activeHeroIndex === index}
+                  onClick={() => setActiveHeroIndex(index)}
+                >
+                  <img src={slide.image} alt="" />
+                  <span>0{index + 1} · {slide.label}</span>
+                </button>
+              ))}
+            </div>
+            <button
+              className="hero-carousel-toggle"
+              type="button"
+              aria-label={heroPaused ? 'Play landing image slideshow' : 'Pause landing image slideshow'}
+              onClick={() => setHeroPaused((paused) => !paused)}
+            >
+              {heroPaused ? <Play size={13} /> : <Pause size={13} />}
+            </button>
+          </div>
           <div className="hero-image-note">
             <span>WABI SABI</span>
-            <span>FORM · FUNCTION · FEELING</span>
+            <span>{activeHero.label} · WABI SABI</span>
           </div>
         </motion.div>
         <a className="scroll-cue" href="#experience" aria-label="Scroll to design experience">
@@ -195,9 +304,8 @@ function Home() {
           <a className="underlined-link" href="#expertise">
             EXPLORE MORE <ArrowUpRight size={16} />
           </a>
-          <div className="about-stamp" aria-hidden="true">
-            <span>MADE WITH INTENTION</span>
-            <span>W · S</span>
+          <div className="about-detail-photo">
+            <img src={photos.cardPlywood} alt="Close-up of a natural interior finish" />
           </div>
         </Reveal>
       </section>
@@ -334,6 +442,7 @@ function Home() {
           </a>
         </Reveal>
       </section>
+      <ScrollProgressButton />
     </main>
   )
 }

@@ -1,5 +1,5 @@
 .hero-section {
-  min-height: min(760px, calc(100svh - 94px));
+  min-height: min(760px, calc(100svh - 104px));
   display: grid;
   grid-template-columns: 0.88fr 1.12fr;
   position: relative;
@@ -21,7 +21,7 @@
   align-items: center;
   gap: 10px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 9.54px;
   font-weight: 600;
   letter-spacing: 0.19em;
   line-height: 1.5;
@@ -43,7 +43,7 @@
 .final-cta h2 {
   margin: 25px 0 0;
   color: var(--charcoal);
-  font-size: clamp(42px, 5.2vw, 76px);
+  font-size: clamp(44.52px, 5.51vw, 80.56px);
   font-weight: 500;
   letter-spacing: -0.075em;
   line-height: 1.04;
@@ -65,7 +65,7 @@
   max-width: 430px;
   margin-top: 24px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 13.78px;
   line-height: 1.9;
 }
 
@@ -84,7 +84,7 @@
   gap: 18px;
   min-height: 49px;
   padding: 0 22px;
-  font-size: 9px;
+  font-size: 9.54px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-decoration: none;
@@ -110,7 +110,7 @@
   align-items: center;
   gap: 10px;
   color: var(--charcoal);
-  font-size: 9px;
+  font-size: 9.54px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-decoration: none;
@@ -127,15 +127,16 @@
   margin-top: auto;
   padding-top: 55px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 8.48px;
   letter-spacing: 0.15em;
 }
 
 .hero-image-wrap {
   min-height: 610px;
-  margin: 24px 0 24px;
+  margin: 48px 0 24px;
   position: relative;
   overflow: hidden;
+  border-radius: 48% 0 0 0 / 30% 0 0 0;
 }
 
 .cover-image,
@@ -159,14 +160,84 @@
 .hero-image-note {
   position: absolute;
   z-index: 1;
+  top: 24px;
   right: 24px;
-  bottom: 23px;
-  left: 24px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
   color: var(--white);
-  font-size: 8px;
+  font-size: 8.48px;
   letter-spacing: 0.15em;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+.hero-carousel-controls {
+  position: absolute;
+  z-index: 2;
+  right: 24px;
+  bottom: 22px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.hero-thumbnails {
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+}
+
+.hero-thumbnail {
+  width: 78px;
+  padding: 4px 4px 7px;
+  border: 1px solid rgba(247, 245, 237, 0.55);
+  background: var(--ivory);
+  color: var(--muted);
+  text-align: left;
+  cursor: pointer;
+  opacity: 0.78;
+  box-shadow: 0 8px 26px rgba(26, 28, 27, 0.2);
+  transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease;
+}
+
+.hero-thumbnail:hover,
+.hero-thumbnail[aria-pressed='true'] {
+  opacity: 1;
+  transform: translateY(-4px);
+  border-color: var(--white);
+}
+
+.hero-thumbnail img {
+  display: block;
+  width: 100%;
+  height: 54px;
+  object-fit: cover;
+}
+
+.hero-thumbnail span {
+  display: block;
+  overflow: hidden;
+  padding: 6px 1px 0;
+  font-size: 6.36px;
+  letter-spacing: 0.09em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-carousel-toggle {
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  flex: 0 0 auto;
+  margin-bottom: 4px;
+  padding: 0;
+  border: 1px solid rgba(247, 245, 237, 0.75);
+  border-radius: 50%;
+  background: var(--ivory);
+  color: var(--charcoal);
+  cursor: pointer;
 }
 
 .scroll-cue {
@@ -177,7 +248,7 @@
   align-items: center;
   gap: 12px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 8.48px;
   letter-spacing: 0.14em;
   text-decoration: none;
   writing-mode: vertical-rl;
@@ -223,7 +294,7 @@
 .experience-heading h2 {
   margin: 29px 0 0;
   color: transparent;
-  font-size: clamp(39px, 7.4vw, 108px);
+  font-size: clamp(41.34px, 7.84vw, 114.48px);
   font-weight: 500;
   letter-spacing: -0.07em;
   line-height: 0.98;
@@ -278,13 +349,13 @@
 
 .experience-card-copy > span {
   color: #a79a87;
-  font-size: 9px;
+  font-size: 9.54px;
   letter-spacing: 0.1em;
 }
 
 .experience-card-copy h3 {
   margin: 13px 0 8px;
-  font-size: 16px;
+  font-size: 16.96px;
   font-weight: 500;
   letter-spacing: -0.04em;
 }
@@ -292,7 +363,7 @@
 .experience-card-copy p {
   max-width: 255px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 11.66px;
   line-height: 1.7;
 }
 
@@ -330,7 +401,7 @@
   bottom: 20px;
   left: 22px;
   color: var(--white);
-  font-size: 8px;
+  font-size: 8.48px;
   letter-spacing: 0.16em;
 }
 
@@ -342,14 +413,14 @@
 .about-copy h2 {
   max-width: 510px;
   margin-top: 26px;
-  font-size: clamp(39px, 4.5vw, 65px);
+  font-size: clamp(41.34px, 4.77vw, 68.9px);
 }
 
 .about-copy > p {
   max-width: 445px;
   margin: 25px 0 27px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 13.78px;
   line-height: 1.95;
 }
 
@@ -359,29 +430,19 @@
   border-bottom: 1px solid var(--beige);
 }
 
-.about-stamp {
-  width: 110px;
+.about-detail-photo {
+  width: 140px;
   height: 110px;
-  margin: 68px 0 0 auto;
-  border: 1px solid rgba(166, 153, 133, 0.55);
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  color: #a69985;
-  transform: rotate(-12deg);
+  margin: 54px 0 0 auto;
+  overflow: hidden;
+  border-radius: 56px 0 0;
 }
 
-.about-stamp span:first-child {
-  font-size: 6px;
-  letter-spacing: 0.16em;
-}
-
-.about-stamp span:last-child {
-  font-size: 26px;
-  letter-spacing: -0.1em;
+.about-detail-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .expertise-section {
@@ -399,14 +460,14 @@
 
 .section-heading h2 {
   margin-top: 20px;
-  font-size: clamp(42px, 5vw, 70px);
+  font-size: clamp(44.52px, 5.3vw, 74.2px);
 }
 
 .section-heading > p {
   max-width: 280px;
   margin-bottom: 8px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 12.72px;
   line-height: 1.8;
 }
 
@@ -445,7 +506,7 @@
   top: 23px;
   left: 25px;
   color: var(--white);
-  font-size: 10px;
+  font-size: 10.6px;
   letter-spacing: 0.13em;
 }
 
@@ -459,14 +520,14 @@
 
 .service-copy h3 {
   margin: 28px 0 0;
-  font-size: clamp(45px, 5.5vw, 79px);
+  font-size: clamp(47.7px, 5.83vw, 83.74px);
 }
 
 .service-copy p {
   max-width: 390px;
   margin: 22px 0 30px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 13.78px;
   line-height: 1.9;
 }
 
@@ -540,14 +601,14 @@
 .project-meta > div > span,
 .project-index {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 8.48px;
   letter-spacing: 0.14em;
 }
 
 .project-meta h3 {
   margin: 7px 0 0;
   color: var(--charcoal);
-  font-size: clamp(17px, 2vw, 24px);
+  font-size: clamp(18.02px, 2.12vw, 25.44px);
   font-weight: 400;
   letter-spacing: -0.04em;
 }
@@ -579,7 +640,7 @@
   top: 60px;
   right: -52px;
   color: transparent;
-  font-size: clamp(65px, 8vw, 120px);
+  font-size: clamp(68.9px, 8.48vw, 127.2px);
   font-weight: 500;
   letter-spacing: -0.08em;
   opacity: 0.36;
@@ -591,7 +652,7 @@
 .values-panel h2 {
   position: relative;
   margin-top: 24px;
-  font-size: clamp(37px, 4vw, 57px);
+  font-size: clamp(39.22px, 4.24vw, 60.42px);
 }
 
 .strength-grid {
@@ -614,20 +675,20 @@
 .strength-number {
   float: right;
   color: #a69985;
-  font-size: 9px;
+  font-size: 9.54px;
   letter-spacing: 0.1em;
 }
 
 .strength-item h3 {
   margin: 16px 0 7px;
   color: var(--charcoal);
-  font-size: 14px;
+  font-size: 14.84px;
   font-weight: 500;
 }
 
 .strength-item p {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 10.6px;
   line-height: 1.7;
 }
 
@@ -643,7 +704,7 @@
 
 .testimonials-copy h2 {
   margin-top: 21px;
-  font-size: clamp(40px, 4.5vw, 64px);
+  font-size: clamp(42.4px, 4.77vw, 67.84px);
 }
 
 .testimonial-cards {
@@ -668,7 +729,7 @@
   min-height: 112px;
   margin: 18px 0;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 11.66px;
   line-height: 1.8;
 }
 
@@ -686,7 +747,7 @@
   border-radius: 50%;
   background: #eee9de;
   color: #a69985;
-  font-size: 10px;
+  font-size: 10.6px;
 }
 
 .client-meta strong,
@@ -696,21 +757,21 @@
 
 .client-meta strong {
   color: var(--charcoal);
-  font-size: 9px;
+  font-size: 9.54px;
   font-weight: 600;
 }
 
 .client-meta small {
   margin-top: 3px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 8.48px;
 }
 
 .testimonial-note {
   display: block;
   margin-top: 13px;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 7.42px;
   letter-spacing: 0.12em;
 }
 
@@ -756,7 +817,7 @@
 .final-cta h2 {
   margin-top: 26px;
   color: var(--white);
-  font-size: clamp(42px, 5.6vw, 78px);
+  font-size: clamp(44.52px, 5.94vw, 82.68px);
 }
 
 .final-cta h2 em {
@@ -767,7 +828,7 @@
   max-width: 510px;
   margin: 24px auto 30px;
   color: rgba(255, 255, 255, 0.75);
-  font-size: 12px;
+  font-size: 12.72px;
   line-height: 1.85;
 }
 
@@ -778,6 +839,38 @@
 
 .button-cream:hover {
   background: var(--beige);
+}
+
+.scroll-progress-button {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: conic-gradient(var(--charcoal) var(--progress), var(--beige) 0);
+  color: var(--charcoal);
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(48, 52, 58, 0.16);
+  transition: transform 180ms ease;
+}
+
+.scroll-progress-button:hover {
+  transform: translateY(-3px);
+}
+
+.scroll-progress-button span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ivory);
 }
 
 @media (max-width: 900px) {
@@ -857,13 +950,13 @@
 
   .hero-copy h1 {
     margin-top: 21px;
-    font-size: clamp(44px, 11vw, 66px);
+    font-size: clamp(46.64px, 11.66vw, 69.96px);
   }
 
   .hero-description {
     max-width: 470px;
     margin-top: 20px;
-    font-size: 12px;
+    font-size: 12.72px;
   }
 
   .hero-actions {
@@ -880,8 +973,44 @@
     height: 72vw;
     min-height: 310px;
     max-height: 510px;
-    margin: 0;
+    margin: 20px 0 0;
     order: 2;
+    border-radius: 48% 0 0 0 / 27% 0 0 0;
+  }
+
+  .hero-image-note {
+    top: 22px;
+    right: 7%;
+  }
+
+  .hero-carousel-controls {
+    right: 10px;
+    bottom: 14px;
+    gap: 5px;
+  }
+
+  .hero-thumbnails {
+    gap: 5px;
+  }
+
+  .hero-thumbnail {
+    width: 62px;
+    padding: 3px 3px 5px;
+  }
+
+  .hero-thumbnail img {
+    height: 42px;
+  }
+
+  .hero-thumbnail span {
+    font-size: 5.3px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-carousel-toggle {
+    width: 25px;
+    height: 25px;
+    margin-bottom: 3px;
   }
 
   .experience-section {
@@ -890,7 +1019,7 @@
   }
 
   .experience-heading h2 {
-    font-size: clamp(34px, 8.5vw, 58px);
+    font-size: clamp(36.04px, 9.01vw, 61.48px);
   }
 
   .experience-cards {
@@ -916,11 +1045,11 @@
   }
 
   .experience-card-copy h3 {
-    font-size: 14px;
+    font-size: 14.84px;
   }
 
   .experience-card-copy p {
-    font-size: 10px;
+    font-size: 10.6px;
   }
 
   .section-pad {
@@ -942,10 +1071,12 @@
   }
 
   .about-copy h2 {
-    font-size: clamp(40px, 9vw, 60px);
+    font-size: clamp(42.4px, 9.54vw, 63.6px);
   }
 
-  .about-stamp {
+  .about-detail-photo {
+    width: 130px;
+    height: 96px;
     margin-top: 38px;
   }
 
@@ -961,7 +1092,7 @@
   }
 
   .section-heading h2 {
-    font-size: clamp(42px, 10vw, 62px);
+    font-size: clamp(44.52px, 10.6vw, 65.72px);
   }
 
   .section-heading > p {
@@ -989,12 +1120,12 @@
 
   .service-copy h3 {
     margin-top: 19px;
-    font-size: clamp(48px, 11vw, 70px);
+    font-size: clamp(50.88px, 11.66vw, 74.2px);
   }
 
   .service-copy p {
     margin: 16px 0 22px;
-    font-size: 12px;
+    font-size: 12.72px;
   }
 
   .projects-section {
@@ -1042,7 +1173,7 @@
   }
 
   .values-panel h2 {
-    font-size: clamp(36px, 8vw, 52px);
+    font-size: clamp(38.16px, 8.48vw, 55.12px);
   }
 
   .strength-grid {
@@ -1051,11 +1182,11 @@
   }
 
   .strength-item h3 {
-    font-size: 12px;
+    font-size: 12.72px;
   }
 
   .strength-item p {
-    font-size: 9px;
+    font-size: 9.54px;
   }
 
   .testimonials-section {
@@ -1066,7 +1197,7 @@
   }
 
   .testimonials-copy h2 {
-    font-size: clamp(40px, 9vw, 58px);
+    font-size: clamp(42.4px, 9.54vw, 61.48px);
   }
 
   .testimonial-cards {
@@ -1094,11 +1225,23 @@
   }
 
   .final-cta h2 {
-    font-size: clamp(40px, 9.5vw, 63px);
+    font-size: clamp(42.4px, 10.07vw, 66.78px);
   }
 
   .final-cta-content > p {
-    font-size: 11px;
+    font-size: 11.66px;
+  }
+
+  .scroll-progress-button {
+    right: 15px;
+    bottom: 15px;
+    width: 46px;
+    height: 46px;
+  }
+
+  .scroll-progress-button span {
+    width: 39px;
+    height: 39px;
   }
 }
 
