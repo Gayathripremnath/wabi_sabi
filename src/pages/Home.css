@@ -790,7 +790,7 @@
   background: var(--charcoal);
 }
 
-.final-cta > img,
+.final-cta-background,
 .final-cta-shade {
   position: absolute;
   inset: 0;
@@ -798,7 +798,10 @@
   height: 100%;
 }
 
-.final-cta > img {
+.final-cta-background > img {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center 56%;
 }

@@ -10,7 +10,7 @@ import {
   Quote,
   Sparkles,
 } from 'lucide-react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import './Home.css'
 
 const photos = {
@@ -116,14 +116,40 @@ const testimonials = [
   },
 ]
 
-function Reveal({ children, className = '', delay = 0 }) {
+const revealOffsets = {
+  up: { y: 26 },
+  down: { y: -26 },
+  left: { x: -34 },
+  right: { x: 34 },
+}
+
+function Reveal({
+  children,
+  className = '',
+  delay = 0,
+  direction = 'up',
+  effect = 'content',
+  style,
+}) {
+  const reduceMotion = useReducedMotion()
+  const initialState = {
+    opacity: 0,
+    ...revealOffsets[direction],
+    ...(effect === 'image' ? { scale: 0.96 } : {}),
+  }
+
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={style}
+      initial={reduceMotion ? false : initialState}
+      whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+      viewport={{ once: false, amount: 0.18 }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.7,
+        delay,
+        ease: [0.22, 1, 0.36, 1],
+      }}
     >
       {children}
     </motion.div>
@@ -186,7 +212,7 @@ function Home() {
     <main>
       <section className="hero-section" id="home">
         <div className="hero-copy">
-          <Reveal>
+          <Reveal direction="left">
             <span className="eyebrow"><span /> INTERIOR DESIGN & PLYWOOD SOLUTIONS</span>
             <h1>
               Spaces Designed
@@ -212,12 +238,7 @@ function Home() {
             <span>DESIGNED TO FEEL LIKE HOME</span>
           </div>
         </div>
-        <motion.div
-          className="hero-image-wrap"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1] }}
-        >
+        <Reveal className="hero-image-wrap" direction="right" effect="image">
           <AnimatePresence mode="wait" initial={false}>
             <motion.img
               key={activeHero.image}
@@ -259,22 +280,32 @@ function Home() {
             <span>WABI SABI</span>
             <span>{activeHero.label} · WABI SABI</span>
           </div>
-        </motion.div>
+        </Reveal>
         <a className="scroll-cue" href="#experience" aria-label="Scroll to design experience">
           <span>SCROLL TO EXPLORE</span><ArrowDown size={15} strokeWidth={1.4} />
         </a>
       </section>
 
       <section className="experience-section" id="experience">
-        <div className="experience-backdrop" style={{ backgroundImage: `url(${photos.experience})` }} />
+        <Reveal
+          className="experience-backdrop"
+          effect="image"
+          style={{ backgroundImage: `url(${photos.experience})` }}
+        />
         <div className="experience-shade" />
-        <Reveal className="experience-heading">
+        <Reveal className="experience-heading" direction="down">
           <span className="eyebrow eyebrow-light">A MORE CONSIDERED WAY TO LIVE</span>
           <h2>DESIGN YOUR SPACE.<br /><span>EXPERIENCE WABI SABI.</span></h2>
         </Reveal>
         <div className="experience-cards">
           {experienceCards.map((card, index) => (
-            <Reveal className="experience-card" key={card.title} delay={index * 0.1}>
+            <Reveal
+              className="experience-card"
+              key={card.title}
+              delay={index * 0.1}
+              direction={index === 0 ? 'left' : index === 1 ? 'up' : 'right'}
+              effect="image"
+            >
               <div className="image-frame">
                 <img src={card.image} alt="" />
               </div>
@@ -289,11 +320,11 @@ function Home() {
       </section>
 
       <section className="about-section section-pad" id="about">
-        <Reveal className="about-image image-frame">
+        <Reveal className="about-image image-frame" direction="left" effect="image">
           <img src={photos.about} alt="Quiet contemporary interior with natural wood and warm light" />
           <span className="image-caption">A HOME THAT FEELS LIKE YOU</span>
         </Reveal>
-        <Reveal className="about-copy" delay={0.12}>
+        <Reveal className="about-copy" delay={0.12} direction="right">
           <span className="eyebrow"><span /> ABOUT WABI SABI</span>
           <h2>Where Design Meets <em>Craftsmanship.</em></h2>
           <p>
@@ -311,19 +342,19 @@ function Home() {
       </section>
 
       <section className="expertise-section" id="expertise">
-        <div className="section-heading section-pad">
+        <Reveal className="section-heading section-pad" direction="left">
           <div>
             <span className="eyebrow"><span /> WHAT WE DO</span>
             <h2>Made for living.<br /><em>Made to last.</em></h2>
           </div>
           <p>Design and materials, brought together to create a more thoughtful home.</p>
-        </div>
+        </Reveal>
         <article className="service-row">
-          <div className="service-image image-frame">
+          <Reveal className="service-image image-frame" direction="left" effect="image">
             <img src={photos.design} alt="Refined contemporary living space designed for everyday life" />
             <span className="service-number">01</span>
-          </div>
-          <div className="service-copy">
+          </Reveal>
+          <Reveal className="service-copy" direction="right">
             <span className="eyebrow"><span /> OUR EXPERTISE</span>
             <h3>Interior<br /><em>Design</em></h3>
             <p>
@@ -333,14 +364,14 @@ function Home() {
             <a className="underlined-link" href="#contact">
               DISCOVER INTERIOR DESIGN <ArrowRight size={16} />
             </a>
-          </div>
+          </Reveal>
         </article>
         <article className="service-row service-row-reverse">
-          <div className="service-image image-frame">
+          <Reveal className="service-image image-frame" direction="right" effect="image">
             <img src={photos.plywood} alt="Natural wood surface and refined interior material detail" />
             <span className="service-number">02</span>
-          </div>
-          <div className="service-copy">
+          </Reveal>
+          <Reveal className="service-copy" direction="left">
             <span className="eyebrow"><span /> OUR EXPERTISE</span>
             <h3>Plywood<br /><em>Solutions</em></h3>
             <p>
@@ -350,12 +381,12 @@ function Home() {
             <a className="underlined-link" href="#contact">
               DISCOVER OUR MATERIALS <ArrowRight size={16} />
             </a>
-          </div>
+          </Reveal>
         </article>
       </section>
 
       <section className="projects-section section-pad" id="projects">
-        <div className="section-heading projects-heading">
+        <Reveal className="section-heading projects-heading" direction="left">
           <div>
             <span className="eyebrow"><span /> SELECTED WORKS</span>
             <h2>Spaces That <em>Inspire.</em></h2>
@@ -363,10 +394,16 @@ function Home() {
           <a className="underlined-link" href="#contact">
             START A PROJECT <ArrowUpRight size={16} />
           </a>
-        </div>
+        </Reveal>
         <div className="project-grid">
           {projects.map((project, index) => (
-            <Reveal className={`project-card ${project.className}`} key={project.title} delay={(index % 2) * 0.1}>
+            <Reveal
+              className={`project-card ${project.className}`}
+              key={project.title}
+              delay={(index % 2) * 0.1}
+              direction={index % 2 === 0 ? 'up' : 'down'}
+              effect="image"
+            >
               <a href="#contact" aria-label={`Discuss a project like ${project.title}`}>
                 <div className="project-image image-frame">
                   <img src={project.image} alt={project.title} />
@@ -383,28 +420,33 @@ function Home() {
       </section>
 
       <section className="values-section">
-        <div className="values-image image-frame">
+        <Reveal className="values-image image-frame" direction="left" effect="image">
           <img src={photos.values} alt="Bright architectural kitchen with warm natural materials" />
-        </div>
-        <div className="values-panel">
+        </Reveal>
+        <Reveal className="values-panel" direction="right">
           <span className="values-ornament" aria-hidden="true">WABI SABI</span>
           <span className="eyebrow"><span /> WHY CHOOSE US</span>
           <h2>Designed with Care.<br /><em>Delivered with Quality.</em></h2>
           <div className="strength-grid">
             {strengths.map((item) => (
-              <div className="strength-item" key={item.number}>
+              <Reveal
+                className="strength-item"
+                key={item.number}
+                delay={Number(item.number) * 0.06}
+                direction={Number(item.number) % 2 === 0 ? 'down' : 'up'}
+              >
                 <span className="strength-icon">{item.icon}</span>
                 <span className="strength-number">{item.number}</span>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="testimonials-section section-pad">
-        <div className="testimonials-copy">
+        <Reveal className="testimonials-copy" direction="left">
           <span className="eyebrow"><span /> OUR CLIENTS</span>
           <h2>Stories Behind<br /><em>Beautiful Spaces.</em></h2>
           <div className="testimonial-cards">
@@ -420,15 +462,17 @@ function Home() {
             ))}
           </div>
           <span className="testimonial-note">SAMPLE PLACEHOLDERS — REPLACE WITH APPROVED CLIENT STORIES</span>
-        </div>
-        <Reveal className="testimonials-image image-frame">
+        </Reveal>
+        <Reveal className="testimonials-image image-frame" direction="right" effect="image">
           <img src={photos.testimonial} alt="Warm family kitchen with natural textures and soft daylight" />
           <span className="image-caption">SPACES TO SHARE</span>
         </Reveal>
       </section>
 
       <section className="final-cta" id="start-project">
-        <img src={photos.cta} alt="" />
+        <Reveal className="final-cta-background" effect="image">
+          <img src={photos.cta} alt="" />
+        </Reveal>
         <div className="final-cta-shade" />
         <Reveal className="final-cta-content">
           <span className="eyebrow eyebrow-light"><span /> YOUR NEXT CHAPTER STARTS HERE</span>
