@@ -1,4 +1,4 @@
-import { ArrowUpRight, Instagram, Linkedin } from 'lucide-react'
+import { ArrowUpRight, BriefcaseBusiness, Camera } from 'lucide-react'
 import logo from '../assets/Logo.png'
 import './Footer.css'
 
@@ -15,10 +15,10 @@ function Footer() {
           </p>
           <div className="footer-socials">
             <a href="https://www.instagram.com/" aria-label="Instagram">
-              <Instagram size={17} strokeWidth={1.5} />
+              <Camera size={17} strokeWidth={1.5} />
             </a>
             <a href="https://www.linkedin.com/" aria-label="LinkedIn">
-              <Linkedin size={17} strokeWidth={1.5} />
+              <BriefcaseBusiness size={17} strokeWidth={1.5} />
             </a>
           </div>
         </div>
